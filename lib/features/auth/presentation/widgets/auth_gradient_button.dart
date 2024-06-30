@@ -3,7 +3,9 @@ import 'package:flutterbloc/core/theme/app_pallete.dart';
 
 class AuthGradientButton extends StatelessWidget {
   final String text;
-  const AuthGradientButton({super.key, required this.text});
+  final VoidCallback onPressed;
+  const AuthGradientButton({super.key, required this.text, required this.onPressed});
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class AuthGradientButton extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(double.maxFinite, 50.0),
           shadowColor: AppPallete.transparentColor,
