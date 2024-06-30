@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterbloc/core/theme/app_pallete.dart';
+import 'package:flutterbloc/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutterbloc/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutterbloc/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:go_router/go_router.dart';
@@ -65,7 +67,20 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(
                 height: 20.0,
               ),
-              const AuthGradientButton(text: "Sign Up",),
+              AuthGradientButton(
+                text: "Sign Up",
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<AuthBloc>().add(
+                          AuthSignUp(
+                            name: nameController.text.trim(),
+                            email: emailController.text.trim(),
+                            password: passwordController.text,
+                          ),
+                        );
+                  }
+                },
+              ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -79,9 +94,8 @@ class _SignupPageState extends State<SignupPage> {
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppPallete.gradient2,
                         fontWeight: FontWeight.bold),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => context.go('/')
-                        )
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => context.go('/'))
               ]))
             ],
           ),
